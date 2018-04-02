@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Title</title>
+    <link href="/static/dist/css/bootstrap.css" rel="stylesheet">
+    <script src="/static/jquery-3.2.1.min.js"></script>
+    <script src="/static/dist/js/bootstrap.js"></script>
+     <link href="/static/sweetalert/sweetalert.css" rel="stylesheet">
+    <script src="/static/sweetalert/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/public/style/cssreset-min.css">
+		<link rel="stylesheet" type="text/css" href="/static/public/style/common.css">
+		<style type="text/css">
+			.emoticons{
+				width: 525px;
+				margin-bottom:20px;
+			}
+			.emoticons .publisher{
+				padding-bottom: 10px;
+				margin-bottom: 10px;
+				border-bottom: 1px dotted #dbdbdb;
+			}
+			.emoticons .publisher textarea{
+				width: 500px;
+				height: 140px;
+				padding: 5px 10px;
+				border: 1px solid #dbdbdb;
+				resize: none;
+			}
+			.emoticons .publisher .trigger{
+				font-size: 24px;
+				font-weight: bold;
+				color: #666;
+			}
+			.emoticons .publisher .trigger-active{
+				color: #eb7350;
+			}
+			.emoticons .result{
+				padding: 10px 15px;
+				border: 1px dotted #dbdbdb;
+				margin-top: 10px;
+				height: 150px;
+				line-height: 24px;
+			}
+			.emoticons .result img{
+				vertical-align: middle;
+			}
+
+			.widget-layer{
+				position: relative;
+				width: 410px;
+				margin-top: 8px;
+				background: #fff;
+				border: 1px solid #dbdbdb;
+				border-radius: 2px;
+			}
+			.widget-layer:before{
+				position: absolute;
+				top: -16px;
+				left: 2px;
+				display: block;
+				content: '';
+				width: 0;
+				height: 0;
+				border: 8px solid transparent;
+				border-bottom-color: #dbdbdb;
+			}
+			.widget-layer:after{
+				position: absolute;
+				top: -15px;
+				left: 2px;
+				display: block;
+				content: '';
+				width: 0;
+				height: 0;
+				border: 8px solid transparent;
+				border-bottom-color: #f0f0f0;
+			}
+			.widget-layer .widget-tool{
+				height: 28px;
+				background: #f0f0f0;
+			}
+			.widget-layer .widget-close{
+				float: right;
+				width: 28px;
+				height: 28px;
+				line-height: 28px;
+				text-align: center;
+				font-family: Arial;
+			}
+			.widget-layer ul{
+				width: 372px;
+				margin: 0 auto;
+				padding: 15px 5px 20px;
+				overflow: hidden;
+			}
+			.widget-layer li{
+				position: relative;
+				z-index: 8;
+				float: left;
+				width: 22px;
+				height: 22px;
+				padding: 4px;
+				margin-left: -1px;
+				margin-top: -1px;
+				border: 1px solid #e8e8e8;
+				cursor: pointer;
+			}
+			.widget-layer li:hover{
+				z-index: 9;
+				border-color: #eb7350;
+			}
+		</style>
+{#		<script type="text/javascript" src="/static/public/script/jquery.min.js"></script>#}
+		<script type="text/javascript" src="/static/code/jquery.emoticons.js"></script>
+    <style>
+        @font-face {
+          font-family: hei; /*这里是说明调用来的字体名字*/
+          src: url('/static/font/hei.otf'); /*这里是字体文件路径*/
+        }
+        body{
+            background: url("/static/img/index.jpg");
+            background-size:cover;
+            height: 770px;
+        }
+        .left{
+
+            top: 50px;
+            left:70px;
+            background-color: white;
+            box-shadow: 0px 0px 15px #7E7E7E;
+            border-radius: 20px 20px 20px 20px;
+{#            width: 600px;#}
+            height: 600px;
+
+        }
+        .right{
+            top: 50px;
+            left:50px;
+            background-color: white;
+            box-shadow: 0px 0px 15px #7E7E7E;
+            border-radius: 20px 20px 20px 20px;
+{#            height: 500px;#}
+        }
+        .avatar{
+            border-bottom: 1px;
+        }
+        .avatar{
+            margin-top: 20px;
+            width: 80px;
+            height: 80px;
+            box-shadow: 0px 0px 10px #7E7E7E;
+            border-radius: 100%;
+
+        }
+
+        .avatar:hover{
+            box-shadow: 0px 0px 10px #2b669a;
+        }
+        .headname{
+             font-family: hei; /*这里设置某参数的字体值，在这里是“my_CSS3_class”调用了你刚才声明的字体值"SketchRockwell"*/
+            margin-left: 20px;
+            font-size: 22px;
+        }
+        .friendlist{
+            height: 320px;
+            overflow-y :auto
+        }
+        .list{
+            margin-left: 10px;
+        }
+        .friendavatar{
+            margin-top: 10px;
+            width: 40px;
+            height: 40px;
+            box-shadow: 0px 0px 5px #7E7E7E;
+            border-radius: 100%;
+        }
+        .friendavatar:hover{
+            box-shadow: 0px 0px 5px #2b669a;
+        }
+        .friendheadname{
+             font-family: hei; /*这里设置某参数的字体值，在这里是“my_CSS3_class”调用了你刚才声明的字体值"SketchRockwell"*/
+            margin-left: 20px;
+            font-size: 15px;
+        }
+        .chat{
+            margin-top:30px;
+            margin-left: 0px;
+            width:100%;
+            height:290px;
+            background-color: white;
+            box-shadow: 0px 0px 10px #7E7E7E;
+            border-radius: 20px 20px 20px 20px;
+            overflow-y :auto;
+            word-wrap:break-word
+        }
+        .et{
+            background-color: white;
+            box-shadow: 0px 0px 10px #7E7E7E;
+            border-radius: 20px 20px 20px 20px;
+{#            word-wrap:break-word#}
+        }
+    </style>
+</head>
+<body>
+<div class="container-field">
+{% csrf_token %}
+    <div class="row">
+        <div class="col-sm-7 left">
+            <div class="chat row" id="chak">
+            <span style="margin-left:50px;font-size: 30px">暂未选择联系人</span>
+            </div>
+
+<div class="main" style="width: 100%">
+			<div class="emoticons" style="width: 100%">
+				<div class="publisher">
+					<p><textarea name="content" class="form-control" style="width: 100%" id="text"></textarea></p>
+					<p><a class="trigger" href="javascript:;">☺</a></p>
+                    <div style="text-align:right;"><button id="format" class="btn btn-info">发送</button></div>
+				</div>
+
+{#				<div id="result" class="result"></div>#}
+			</div>
+        </div>
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 right">
+         <div class="head">
+             <img src="{{ request.session.user.avatar }}" class="avatar">
+             <span class="headname" id="user" uid={{ request.session.user.id }}>{{ request.session.user.user }}</span>
+             <hr>
+         </div>
+         <strong>我的好友</strong>
+            <div class="friend friendlist" id="myfriend">
+            {% if friend.0.groupfriend__friend__avatar != None %}
+             {% for item in friend %}
+               <div class="list">
+                   <a class="gochat" href="javascript:void(0);"  fid={{ item.groupfriend__friend__id }}><img src="/media/{{ item.groupfriend__friend__avatar }}" class="friendavatar"></a>
+                   <a class="gochat" href="javascript:void(0);" style="color: black;" fid={{ item.groupfriend__friend__id }}><span class="friendheadname">{{ item.groupfriend__friend__user }}</span></a>
+               {% if item.groupfriend__friend__isonline == 1 %}
+                   <span style="color: red;">(在线)</span>
+                   {% else %}
+                   <span style="color: gray;">(离线)</span>
+               {% endif %}
+                 </div>
+
+                {% endfor %}
+            {% else %}
+            <h2>无好友</h2>
+            {% endif %}
+            </div>
+        <div style="height: 70px">
+            <a href="" class="pull-left btn btn-info" data-toggle="modal" data-target="#myModal" style="margin-top: 20px">添加好友</a>
+            <a href="" class="pull-left btn btn-danger" style="margin-top: 20px">刷新</a>
+            <a href="/logout/{{ request.session.user.id }}" class="pull-right btn btn-warning" style="margin-top: 20px">注销</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">添加好友</h4>
+      </div>
+      <div class="modal-body" id="selectu">
+          <label for="name">查找用户</label>
+          <input type="text" id="name" name="user" class="form-control">
+          <div id="addfriend">
+
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="star">Select</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+<script>
+    $('#star').click(function () {
+        $.ajax({
+            type:'post',
+            url:'/index/select',
+            data:{user:$('#name').val()},
+            headers:{"X-CSRFToken":$('[name="csrfmiddlewaretoken"]').val()},
+            success:function (data) {
+                if (data.sta==1){
+                    var s='<div>\n' +
+                        '              <img src="/media/'+data.friend_avatar+'" class="friendavatar">\n' +
+                        '              <span class="friendheadname">'+data.friend_name+'</span>\n' +
+                        '              <button class="btn btn-success" id="add_friend" fid="'+data.friend_id+'">加为好友</button>\n' +
+                        '          </div>'
+                }
+                else {
+                    var s = '<div><h3>无查询结果</h3></div>'
+                }
+                $('#addfriend').html(s)
+            }
+        })
+    });
+    $('body').on('click','#add_friend',function () {
+        $.ajax({
+            type:'post',
+            url:'/index/addfriend',
+            data:{
+                fid:$(this).attr('fid')
+            },
+             headers:{"X-CSRFToken":$('[name="csrfmiddlewaretoken"]').val()},
+            success:function (data) {
+                if (data.sta==1){
+
+                    var st='<div class="list">\n' +
+                        '                   <a class="gochat" href="javascript:void(0);"  fid='+data.friend_id+'><img src="/media/'+data.friend_avatar+'" class="friendavatar"></a>\n' +
+                        '                   <a class="gochat" href="javascript:void(0);"  fid='+data.friend_id+' style="color: black;"><span class="friendheadname">'+data.friend_name+'</span></a>\n' +
+                        '                 </div>';
+                    $('#myfriend').append(st);
+                    $('#name').val('');
+                    $('#addfriend').html('');
+                    swal("添加成功", "已将好友添加至列表","success");
+
+                }
+                if (data.sta==3){
+                    swal("添加失败！", "好友已存在！","error");
+                }
+                if (data.sta==2) {
+                    swal("添加失败！", "请重试！","error");
+                }
+
+            }
+        })
+    })
+
+
+</script>
+<script>
+
+				$.emoticons({
+					'activeCls':'trigger-active'
+				},function(api){
+					var $content = $('textarea[name="content"]');
+					var $result = $('#result');
+					$('#format').click(function(){
+					    var uid=$('#user').attr('uid');
+					    var fid=$('#chak').attr('fid');
+					    $.ajax({
+                            type:'post',
+                            url:'/addchat/',
+                            data: {
+                                content: api.format($content.val()),
+                                fid:fid,
+                                uid:uid
+                            },
+                             headers:{"X-CSRFToken":$('[name="csrfmiddlewaretoken"]').val()},
+                                success:function (data) {
+                                    if(data.sta==1){
+                                        $('#text').val('')
+                                    }
+                                    if (data.sta==2){
+                                        swal("发送失败！", "出现问题！","error");
+                                    }
+
+                            }
+                        });
+{#					    alert(api.format($content.val()));#}
+{#						$result.html(api.format($content.val()));#}
+					});
+				});
+			</script>
+{#获取聊天记录#}
+<script>
+
+    var si;
+    var fid;
+    var uid=$('#user').attr('uid');
+    $('body').on('click','.gochat',function () {
+        var se=$('.et').attr('si');
+        $('#chak').attr('fid',$(this).attr('fid'));
+{#        $('#chak').#}
+           clearInterval(si);
+            $("#chak").html('');
+            var fid=$(this).attr('fid');
+               si=setInterval(function () {
+                  $.ajax({
+                      url:'/chatlog/?'+'uid='+uid+'&'+'fid='+fid,
+                      success:function (data) {
+                          if (data!=1){
+
+                        var htmls=show_chat(data);
+                        $("#chak").html(htmls);
+
+                               }
+                      }
+                  });
+              },1000);
+
+    });
+
+    function show_chat(data) {    //  [{"nid":67,"content":"111","children_list":[]}，{}，{}]
+           var html="";
+           $.each(data,function (i,data_dict) {
+                if(data_dict['userid']==uid){
+                     var s='<div style="margin-left: 390px;margin-top:20px;" class="col-sm-6 et" si='+si+'>\n' +
+                         '                    <div style="margin-left: 60px">:\n' +
+                         '                                <span>'+data_dict['createtime']+'</span>\n' +
+                         '                    <span>'+data_dict['username']+'</span>\n' +
+                         '                         <img src="/media/'+data_dict['avatar']+'" alt="" class="friendavatar">\n' +
+                         '\n' +
+                         '                        </div>\n' +
+                         '                    <div style="margin-left: 100px">\n' +
+                         '\n' +
+                             data_dict['content']+
+                         '                    </div>\n' +
+                         '                </div>'
+                }
+                else {
+                    var s=' <div style="margin-left: 10px;margin-top:20px;" class="col-sm-6 chaf et" si='+si+' fid="'+data_dict['userid']+'">\n' +
+                        '                    <div>\n' +
+                        '                    <img src="/media/'+data_dict['avatar']+'" alt="" class="friendavatar">\n' +
+                        '                    <span>'+data_dict['username']+'</span>\n' +
+                        '                    <span>'+data_dict['createtime']+'</span>\n' +
+                        '                        :</div>\n' +
+                        '                    <div style="margin-left: 50px">\n' +
+                        '\n' +
+                               data_dict['content']+
+                        '                    </div>\n' +
+                        '                </div>'
+
+                }
+
+                html+=s
+           });
+
+          return html
+   }
+</script>
+</html>
